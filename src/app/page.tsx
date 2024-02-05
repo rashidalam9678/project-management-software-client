@@ -1,7 +1,8 @@
 "use client"
-import Link from "next/link";
 import {useAuth} from "@clerk/nextjs";
 import { redirect } from 'next/navigation'
+import Navbar from "@/components/home/Navbar";
+import Hero from "@/components/home/Hero";
 
 
 export default function Home() {
@@ -12,12 +13,9 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    <div>
-      <h1 className="text-3xl border-l-destructive">Hey, Welcome to the ProjectX</h1>
-      <h3>Make your life easy while working on projects</h3>
-      <Link className="underline text-blue-400" href='/sign-in'>Sign In</Link>
-    </div>
+    <main className=" min-h-screen">
+      <Navbar/>
+      <Hero/>
     </main>
   );
 }

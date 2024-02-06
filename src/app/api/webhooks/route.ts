@@ -50,12 +50,12 @@ export async function POST(req: Request) {
   // Get the ID and type
   const { id } = evt.data;
   const eventType = evt.type;
-  const da=JSON.parse(body)
+  const data=JSON.parse(body)
 
   switch(eventType){
     case 'user.created':
       console.log("user created")
-      console.log('Webhook body email:', da.data.email_addresses[0].email_address)
+      console.log('Webhook body email:', data.data.email_addresses[0].email_address)
 
       try {
         const response = await fetch('http://localhost:8080/user', {
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ external_id:id, email: da.data.email_addresses[0].email_address}),
+          body: JSON.stringify({ id:id, email: data.data.email_addresses[0].email_address}),
         });
   
         if (response.ok) {
@@ -88,10 +88,40 @@ export async function POST(req: Request) {
     case 'user.updated':
       console.log("user updated")
       console.log(payload)
+      
       break;
+
     case 'user.deleted':
       console.log("user deleted")
       console.log(payload)
+
+      try {
+        const response = await fetch('http://localhost:8080/user', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id:id}),
+        });
+  
+        if (response.ok) {
+          const deletedUser = await response.json();
+          console.log('User deleted:', deletedUser);
+          // Handle successful creation, e.g., update UI or navigate to a different page
+        } else {
+          console.error('Error creating user:', response.statusText);
+          // Handle error, e.g., display an error message to the user
+          new Response('Error occured while deleting the user from SQL database', {
+            status: 400
+          })
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        // Handle error, e.g., display an error message to the user
+        new Response('Backend endpoint not reachable', {
+          status: 400
+        })
+      }
       break;
   
   }

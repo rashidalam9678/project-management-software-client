@@ -47,7 +47,7 @@ export default function CreateProjectDialog() {
     const [dialogOpen, setDialogOpen] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const { getToken } = useAuth()
-    const router=useRouter()
+    const router = useRouter()
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof formSchema>>({
@@ -80,21 +80,21 @@ export default function CreateProjectDialog() {
             toast.error('something went wrong,', {
                 description: "unable to process request at the moment. please try again later."
             })
-            
-        }finally{
+
+        } finally {
             setLoading(false)
             setDialogOpen(false)
         }
     }
     return (
         <>
-            <div className=" flex items-center justify-center  cursor-pointer hover:text-blue-600 ">
+            <div className="flex items-center cursor-pointer">
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogTrigger asChild>
-                        <div className="flex items-center justify-center border-dashed border-2 p-2 hover:border-blue-600 ">
-                            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg></p>
-                            <p className="pl-2">new project</p>
-                        </div>
+                    <DialogTrigger asChild >
+                        <Button >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-plus"><path d="M5 12h14" /><path d="M12 5v14" /></svg>
+                            New Project
+                        </Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
                         <DialogHeader>
@@ -138,7 +138,7 @@ export default function CreateProjectDialog() {
                                     Close
                                 </Button>
                             </DialogClose>
-                            <Button disabled={loading} onClick={form.handleSubmit(onSubmit)} >{loading? <>Creating...</>:<>Create Project</>}</Button>
+                            <Button disabled={loading} onClick={form.handleSubmit(onSubmit)} >{loading ? <>Creating...</> : <>Create Project</>}</Button>
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>

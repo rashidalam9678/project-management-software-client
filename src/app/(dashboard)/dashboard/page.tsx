@@ -1,5 +1,6 @@
 import CreateProjectDialog from "@/components/project/CreateProjectDialog"
 import ProjectCard from "@/components/project/ProjectCard"
+import SearchProject from "@/components/project/SearchProject"
 import { auth } from "@clerk/nextjs"
 import axios from "axios"
 
@@ -25,8 +26,8 @@ export default async function Dashboard() {
 
     return (
         <div className="flex items-center flex-col ">
-            <div className="flex items-center justify-end md:justify-between w-full p-2 px-8 md:px-16  border-b-2">
-                <h1 className="text-xl font-semibold hidden md:block">My Projects</h1>
+            <div className="flex items-center  md:justify-between w-full p-2 px-8 md:px-16 gap-8">
+                <SearchProject />
                 <CreateProjectDialog />
             </div>
 
